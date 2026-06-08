@@ -1,7 +1,7 @@
 ---
 marp: true
-title: "Building Without Permission in the Age of AI"
-description: "A short talk on permissionless building, open source, AI, and business adaptation"
+title: "LNbitsBox"
+description: "A fast, demo-led intro to LNbitsBox as a self-hosted Lightning appliance"
 theme: default
 paginate: true
 paginate-position: bottom-left
@@ -12,6 +12,8 @@ style: |
     --accent: #b53cff;
     --accent-soft: #d9a7ff;
     --btc: #f7931a;
+    --panel: #160c24;
+    --panel-2: #211334;
     --text: #f5ecff;
     --muted: #cdb8df;
   }
@@ -20,8 +22,7 @@ style: |
     position: relative;
     font-family: 'Avenir Next', 'Segoe UI', sans-serif;
     background:
-      radial-gradient(circle at bottom left, rgba(247, 147, 26, 0.08), transparent 28%),
-      linear-gradient(135deg, #140a22 0%, #0e0718 52%, #060309 100%);
+      linear-gradient(135deg, #140a22 0%, #0e0718 54%, #060309 100%);
     color: var(--text);
     padding: 54px 60px 46px 60px;
   }
@@ -33,13 +34,9 @@ style: |
     bottom: -62px;
     width: 216px;
     height: 216px;
-    background: url('./images/lnbits_nostr_logo.png') center / contain no-repeat;
-    opacity: 0.22;
+    background: url('./images/lnbits_logo.png') center / contain no-repeat;
+    opacity: 0.18;
     pointer-events: none;
-  }
-
-  footer {
-    display: none;
   }
 
   section::after {
@@ -51,19 +48,37 @@ style: |
     pointer-events: none;
   }
 
+  footer {
+    display: none;
+  }
+
   h1, h2, h3 {
     color: #ffffff;
     letter-spacing: 0.02em;
     margin-bottom: 0.22em;
   }
 
-  h1 { font-size: 1.85em; }
-  h2 { font-size: 1.38em; display: inline-block; }
-  h3 { font-size: 0.9em; color: var(--accent-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+  h1 {
+    font-size: 1.7em;
+    max-width: 900px;
+  }
+
+  h2 {
+    font-size: 1.34em;
+    display: inline-block;
+  }
+
+  h3 {
+    font-size: 0.78em;
+    color: var(--accent-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.3em;
+  }
 
   p, li, td, th, blockquote {
-    font-size: 0.78em;
-    line-height: 1.3;
+    font-size: 0.74em;
+    line-height: 1.28;
   }
 
   ul {
@@ -72,7 +87,7 @@ style: |
   }
 
   li {
-    margin: 0.18em 0;
+    margin: 0.16em 0;
   }
 
   li::marker {
@@ -81,6 +96,14 @@ style: |
 
   strong {
     color: var(--accent-soft);
+  }
+
+  code {
+    color: #fff3dd;
+    background: rgba(247, 147, 26, 0.14);
+    border: 1px solid rgba(247, 147, 26, 0.35);
+    border-radius: 7px;
+    padding: 0.08em 0.3em;
   }
 
   blockquote {
@@ -94,38 +117,6 @@ style: |
     max-width: 100%;
   }
 
-  table {
-    width: auto;
-    border-collapse: collapse;
-    margin-top: 0.45em;
-    background: #12081f;
-    border: 2px solid rgba(247, 147, 26, 0.55);
-    border-radius: 14px;
-    overflow: hidden;
-    display: inline-table;
-  }
-
-  th, td {
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 8px 10px;
-  }
-
-  td {
-    background: #1a1028;
-    color: #f7f2ff;
-  }
-
-  tr:nth-child(even) td {
-    background: #221534;
-  }
-
-  th {
-    text-align: left;
-    background: #f7931a;
-    color: #140a22;
-    font-weight: 700;
-  }
-
   h2::after {
     content: "";
     display: block;
@@ -136,236 +127,277 @@ style: |
     background: linear-gradient(90deg, var(--btc), var(--accent));
   }
 
-  .about-gifs {
-    display: flex;
-    gap: 18px;
-    margin-top: 0.75em;
-    align-items: center;
-    justify-content: center;
+  .eyebrow {
+    color: var(--btc);
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    margin: 0 0 0.55em;
+    text-transform: uppercase;
   }
 
-  .about-gifs img {
-    height: 180px;
-    width: auto;
-    border-radius: 12px;
-    display: block;
-    object-fit: cover;
+  .lead {
+    color: #ffffff;
+    font-size: 0.92em;
+    line-height: 1.24;
+    max-width: 900px;
   }
 
-  .side-figure {
+  .muted {
+    color: var(--muted);
+  }
+
+  .split {
     display: grid;
-    grid-template-columns: 1fr 240px;
-    gap: 18px;
+    grid-template-columns: minmax(0, 1.03fr) minmax(300px, 0.97fr);
+    gap: 30px;
     align-items: start;
   }
 
-  .side-figure-media {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .side-figure.side-figure-wide {
-    grid-template-columns: 1fr 290px;
-  }
-
-  .side-figure.box-side-figure {
-    grid-template-columns: 1fr 435px;
-  }
-
-  .offset-figure {
-    margin-top: -2em;
-    margin-left: -3em;
-  }
-
-  .box-figure {
-    margin-left: 0.6em;
-  }
-
-  .side-figure img {
-    width: 100%;
-    border-radius: 14px;
-    display: block;
-    opacity: 0.92;
-  }
-
-  .demo-video {
-    width: 100%;
-    max-width: 920px;
-    max-height: 470px;
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
     margin-top: 1em;
-    border-radius: 16px;
+  }
+
+  .flow.three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .flow.vertical {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 0;
+  }
+
+  .step, .column, .service {
+    background: linear-gradient(180deg, rgba(33, 19, 52, 0.96), rgba(18, 8, 31, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 98px;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    color: #ffffff;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: "->";
+    position: absolute;
+    right: -20px;
+    color: var(--btc);
+    font-weight: 800;
+  }
+
+  .flow.vertical .step:not(:last-child)::after {
+    content: "v";
+    right: auto;
+    bottom: -18px;
+  }
+
+  .column h3, .service h3 {
+    margin-top: 0;
+  }
+
+  .column p, .service p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.67em;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 0.7em;
+  }
+
+  .service {
+    min-height: 74px;
+    padding: 12px 14px;
+  }
+
+  .service h3 {
+    font-size: 0.62em;
+  }
+
+  .site {
+    color: #fff3dd;
+    font-size: 1.08em;
+    font-weight: 800;
+  }
+
+  .demo-list {
+    counter-reset: demo;
+    list-style: none;
+    margin: 1em 0 0;
+    padding: 0;
+  }
+
+  .demo-list li {
+    counter-increment: demo;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin: 0 0 12px;
+    padding: 14px 16px;
+    background: var(--panel);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .demo-list li::before {
+    content: counter(demo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--btc);
+    color: #140a22;
+    flex: 0 0 32px;
+  }
+
+  .box-photo {
+    width: 100%;
+    max-height: 410px;
+    object-fit: cover;
+    border-radius: 8px;
     border: 1px solid rgba(247, 147, 26, 0.45);
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
-    background: #000;
   }
 
-  section.title-slide {
+  section.center-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     text-align: center;
   }
+
+  section.center-slide h1 {
+    font-size: 3em;
+    margin: 0;
+    max-width: none;
+  }
+
+  .final-logo {
+    display: block;
+    width: 220px;
+    height: auto;
+    margin: 0 auto 28px;
+  }
+
+  .hero-logo {
+    display: block;
+    width: min(560px, 78vw);
+    height: auto;
+    margin: 0 auto;
+  }
 ---
 
-<!-- _class: title-slide -->
-## Building without permission in the age of AI
-
----
-
-
-## About me
-### Builder, educator, tinkerer, CEO LNbits.com Nostr.com
-<div class="about-gifs">
-  <img src="./images/1.gif" alt="About me gif 1">
-  <img src="./images/2.gif" alt="About me gif 2">
-  <img src="./images/3.gif" alt="About me gif 3">
-</div>
-
----
-
-
-## A brief history of free and open-source
-
-
-- **1970s** “Sharing culture”  
-  Homebrew Computer Club (pre–open source)
-- **1976:** Bill Gates, “An Open Letter to Hobbyists”  
-  “People copying software is stealing”
-- **1983:** GNU Project (Richard Stallman)  
-  **1985:** GNU GPL v1  
-  - Must share source  
-  - Keeps software open  
-  - Requires attribution  
-- **1987:** MIT License (Massachusetts Institute of Technology)  
-  - Do anything (even use in closed software)  
-  - Just keep attribution  
-
-<blockquote>
-Software as knowledge not property
-</blockquote>
-
+<!-- _class: center-slide -->
+<img class="hero-logo" src="./images/lnbitsbox-logo.svg" alt="LNbitsBox logo">
 
 ---
 
-## FOSS as the commons
+## What Is LNbitsBox?
 
-<div class="side-figure">
+**LNbitsBox is a self-hosted Lightning appliance.**
+
+<div class="split">
 <div>
 
-- Bitcoin and Nostr require no permission
-- Open protocols keep capital answerable to users
-- Adam Smith Invisible Bitch Slap (Ben™)
-- Closed platforms lock people in, enshittify, push users to FOSS
+A Raspberry Pi image that boots into a working LNbits server, with the critical parts already wired together.
 
-<blockquote>
-Nurture the commons and get rewarded, exploit it and get a slap
-</blockquote>
+- First-run setup wizard
+- LNbits with Phoenixd, Ark(ade) or Spark Lightning funding sources
+- Tor hidden service
+- Clearnet URL
+- Admin control panel
+- Wi-Fi config
+- OTA updates
+- Manual and rolling encrypted backup and recovery
+- Local HTTPS with installable CA
 
 </div>
-<img class="offset-figure" src="./images/adam_smith.png" alt="Adam Smith">
 </div>
 
 ---
 
-## The good: vibe coding
+## Why?
 
+**Because sovereign self-hosting can be easy.**
 
-### Build like it’s 1975 🎵
+LNbitsBox gives you a fully self-contained Lightning appliance that is easy to set up, use, and maintain.
 
+<div class="flow three">
+  <div class="column">
+    <h3>Personal node</h3>
+    <p>Run your own LNbits instance at home with no cloud account required for the core experience.</p>
+  </div>
+  <div class="column">
+    <h3>Workshop device</h3>
+    <p>Use it in a classroom, hackerspace, event booth, or hands-on Bitcoin workshop.</p>
+  </div>
+  <div class="column">
+    <h3>Merchant / project box</h3>
+    <p>Prototype payments, private reachability, tunnels, updates, and recovery flows in the real world.</p>
+  </div>
+</div>
 
-- Culture of building again
-- Gonzo Development (Ben™)
-- Cost of producing software is low (allegedly)
-
-
----
-
-## Doomer time...
-
----
-
-## The bad: hype, myth, limitations
-
-- Licensing implications + code theft
-   - Licenses matter!
-- !context === slop. Agents get dumb fast
-- Turing hype: LLMs are great at sounding clever
-- AI hallucinates and is unpredictable
-- VC/CEO crack - dump workforce, force useless "AI" products on customers
-
-
-| Risk | Result |
-| --- | --- |
-| License breach | Everyone sues each other |
-| AI over-pumped | Later market correction |
-| Skill atrophy | Bleed engineering talent |
+- Tor support for private reachability
+- Admin panel for status, services, Wi-Fi, updates, and tunnels
+- Built for demos: reset, reconfigure, update, recover
 
 ---
 
-## The ugly: AI industry is a huge bubble
+## Why NixOS?
 
-<div class="side-figure side-figure-wide">
+**Because the box should be reproducible, not artisanal.**
+
+<div class="split">
 <div>
 
-- Unsustainable AI business models (current 10x discount before profit)
-- AGI promise built on sand/assumptions (enough power then AGI)
-- Rising energy/resource costs
-- Capital intensity problem facing frontier AI companies
-- Gov tax breaks
-- Slow/expensive infrastructure rollout
-- If/when promises are kept capitalism breaks
+NixOS makes the whole appliance declarative: services, ports, files, packages, boot behavior, and update flow.
 
-| Risk | Result |
-| --- | --- |
-| Poor AI economics | Users won't pay actual cost |
-| AI plateaus | VCs lose return/hyper-enshittification |
-| Industry buckles under own falsehoods | AI development grinds to a halt |
+- Same config builds the same system image
+- Easier OTA updates via immutable system generations
+- Rollback-friendly when updates go wrong
+- Services are explicit: LNbits, Spark sidecar, Caddy, Tor, admin app
+- Great fit for appliances: define the state machine once, ship it as an image
 
 </div>
-<div class="side-figure-media">
-<img src="./images/graph.jpg" alt="AI industry graph">
-<img src="./images/graph2.jpg" alt="AI industry graph 2">
-</div>
-</div>
-
----
-
-## Reality
-
-- Make hay while the sun shines 🤷
-- Don't bleed engineers
-- Build like it's 1975
-- **context**, **context**, **context** ideas are scarce, tokens are unrealistically cheap
-
-<blockquote>Replacing a developer with AI is like replacing a carpenter with a hammer
-</blockquote>
-
----
-
-## Adjusting to current reality
-
-<div class="side-figure box-side-figure">
 <div>
-
-- **Some systems should stay dumb, narrow, and predictable**
-- API is the UI for AI
-- Be mindful we are in a blip that could pop
-- We still exist in a world of friction, removing friction has value
-- Engineers are not paid just to type code
-- AI is weak outside the training set
-- Humans have material reality context
-
-<blockquote>I still review all the code, AI isn't there yet ~ Dario Amodei
-</blockquote>
-
+  <div class="flow vertical">
+    <div class="step">flake.nix</div>
+    <div class="step">SD image</div>
+    <div class="step">Raspberry Pi</div>
+    <div class="step">Reproducible LNbitsBox</div>
+  </div>
 </div>
-<img class="offset-figure box-figure" src="./images/box.jpg" alt="LNbits Box">
 </div>
 
 ---
 
-## Demo
+<!-- _class: center-slide -->
+# Demo
 
-<video class="demo-video" controls autoplay muted loop playsinline>
-  <source src="./images/orangepillshort.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+---
+
+<!-- _class: center-slide -->
+<img class="final-logo" src="./images/lnbits_logo.png" alt="LNbits logo">
+
+# LNbitsBox.com

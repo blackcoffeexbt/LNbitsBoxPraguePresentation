@@ -1,6 +1,6 @@
 # LNbits Box Prague Presentation
 
-Markdown-based presentation materials for the talk **"Building Without Permission in the Age of AI"**.
+Markdown-based presentation materials for the talk **"LNbitsBox"**.
 
 ## Generate
 

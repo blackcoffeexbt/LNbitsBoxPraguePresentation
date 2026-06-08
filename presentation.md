@@ -320,7 +320,7 @@ style: |
 <div class="split">
 <div>
 
-A Raspberry Pi image that boots into a working LNbits server, with the critical parts already wired together.
+A Linux appliance that boots into a working LNbits server, with the critical parts already wired together.
 
 - First-run setup wizard
 - LNbits with Phoenixd, Ark(ade) or Spark Lightning funding sources
@@ -366,27 +366,19 @@ LNbitsBox gives you a fully self-contained Lightning appliance that is easy to s
 
 ## Why NixOS?
 
-**Because the box should be reproducible, not artisanal.**
+**Because hardware for money should be reproducible**
 
 <div class="split">
 <div>
 
-NixOS makes the whole appliance declarative: services, ports, files, packages, boot behavior, and update flow.
+NixOS makes the whole appliance declarative: services, ports, files, packages and update flow.
 
 - Same config builds the same system image
-- Easier OTA updates via immutable system generations
+- Easier OTA updates
 - Rollback-friendly when updates go wrong
-- Services are explicit: LNbits, Spark sidecar, Caddy, Tor, admin app
-- Great fit for appliances: define the state machine once, ship it as an image
+- Services are explicit: LNbits, funding sources, Caddy, Tor, admin app
+- Great fit for appliances: define the state and ship it
 
-</div>
-<div>
-  <div class="flow vertical">
-    <div class="step">flake.nix</div>
-    <div class="step">SD image</div>
-    <div class="step">Raspberry Pi</div>
-    <div class="step">Reproducible LNbitsBox</div>
-  </div>
 </div>
 </div>
 

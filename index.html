@@ -1207,7 +1207,7 @@ section.center-slide h1 {
 <p><strong>LNbitsBox is a self-hosted Lightning appliance.</strong></p>
 <div class="split">
 <div>
-<p>A Raspberry Pi image that boots into a working LNbits server, with the critical parts already wired together.</p>
+<p>A Linux appliance that boots into a working LNbits server, with the critical parts already wired together.</p>
 <ul>
 <li>First-run setup wizard</li>
 <li>LNbits with Phoenixd, Ark(ade) or Spark Lightning funding sources</li>
@@ -2440,16 +2440,16 @@ section.center-slide h1 {
 }
 ;color:#f5ecff;" data-marpit-pagination-total="6">
 <h2 id="why-nixos">Why NixOS?</h2>
-<p><strong>Because the box should be reproducible, not artisanal.</strong></p>
+<p><strong>Because hardware for money should be reproducible</strong></p>
 <div class="split">
 <div>
-<p>NixOS makes the whole appliance declarative: services, ports, files, packages, boot behavior, and update flow.</p>
+<p>NixOS makes the whole appliance declarative: services, ports, files, packages and update flow.</p>
 <ul>
 <li>Same config builds the same system image</li>
-<li>Easier OTA updates via immutable system generations</li>
+<li>Easier OTA updates</li>
 <li>Rollback-friendly when updates go wrong</li>
-<li>Services are explicit: LNbits, Spark sidecar, Caddy, Tor, admin app</li>
-<li>Great fit for appliances: define the state machine once, ship it as an image</li>
+<li>Services are explicit: LNbits, funding sources, Caddy, Tor, admin app</li>
+<li>Great fit for appliances: define the state and ship it</li>
 </ul>
 </div>
 </div>

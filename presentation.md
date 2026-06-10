@@ -306,6 +306,32 @@ style: |
     height: auto;
     margin: 0 auto;
   }
+
+  .final-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    margin-top: 38px;
+    font-size: 1.3em;
+  }
+
+  .final-links a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .github-link img {
+    width: 30px;
+    height: 30px;
+    display: block;
+  }
 ---
 
 <!-- _class: center-slide -->
@@ -392,4 +418,10 @@ NixOS makes the whole appliance declarative: services, ports, files, packages an
 <!-- _class: center-slide -->
 <img class="final-logo" src="./images/lnbits_logo.png" alt="LNbits logo">
 
-# LNbitsBox.com
+<div class="final-links">
+  <a href="https://box.lnbits.com">box.lnbits.com</a>
+  <a class="github-link" href="https://github.com/lnbits/lnbitsbox">
+    <span>github.com/lnbits/lnbitsbox</span>
+  </a>
+  <a href="https://lnbits.com">lnbits.com</a>
+</div>
